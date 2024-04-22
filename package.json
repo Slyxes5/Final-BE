@@ -14,5 +14,11 @@
     "prisma": "^5.12.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.12.1",
+    "express": "^4.19.2",
+    "morgan": "^1.10.0",
+    "pg": "^8.11.5"
   }
 }
