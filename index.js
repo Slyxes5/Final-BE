@@ -18,7 +18,7 @@ const prisma = new PrismaClient();
 app.get("/customer", async (req, res) => {
   try {
     const allCustomers = await prisma.customer.findMany(); // Corrected the model name here
-
+    console.log(allCustomers);
     res.status(200).json({
       status: "Data semua customer berhasil ditemukan", // Improved message consistency
       data: allCustomers,
