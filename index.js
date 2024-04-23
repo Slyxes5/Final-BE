@@ -30,38 +30,71 @@ app.get("/customer", async (req, res) => {
 });
 
 
+app.delete("/customer/:id", async (req, res) => {
+  const idCustomer = req.params.id;
+  try {
+   const customerDeleted = await prisma.customer.delete({
+      where: {
+        id: parseInt(idCustomer)
+      },
+    });
+    res.status(200).json({
+      status: "success",
+      message: "data has successfully deleted",
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.put("/customer/:id", async (req, res) => {
+  const customerId = req.params.id;
+  const { nama, alamat, no_hp } = req.body;
+
+  try {
+    const updatedCustomer = await prisma.customer.update({
+      where: {
+        id: parseInt(customerId),
+      },
+      data: {
+        nama: nama,
+        alamat: alamat,
+        no_hp: no_hp,
+      },
+    });
+
+    res.status(200).json({
+      status: "success",
+      message: "Data Customer berhasil diperbarui",
+      data: updatedCustomer,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+
+
 app.post("/customer", async (req, res) => {
-    // Ensure you are destructuring all the needed fields from the body
-    const { nama, alamat, no_hp } = req.body;
-
-    // Basic validation to ensure that all required fields are provided
-    if (!nama || !alamat || !no_hp) {
-        return res.status(400).json({
-            status: "error",
-            message: "Missing required fields (nama, alamat, no_hp)"
-        });
-    }
-
-    try {
-        // Correctly map the destructured variables to your database fields
-        const newCustomer = await prisma.customer.create({
-            data: {
-                nama: nama,     // Assuming the field in your database is 'name'
-                alamat: alamat, // Assuming the field in your database is 'address'
-                no_hp: no_hp    // Assuming the field in your database is 'no_hp'
-            },
-        });
-
-        // Use 201 status code for resource creation
-        res.status(201).json({
-            status: "success",
-            message: "Data successfully inserted",
-            data: newCustomer
-        });
-    } catch (err) {
-        console.error(err);
-        res.status(500).send("Internal Server Error");
-    }
+  const { nama, alamat, no_hp } = req.body;
+  try {
+    await prisma.customer.create({
+      data: {
+        nama: nama,
+        alamat: alamat,
+        no_hp: no_hp
+      },
+    });
+    res.status(200).json({
+      status: "success",
+      message: "data berhasil dimasukan",
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 
