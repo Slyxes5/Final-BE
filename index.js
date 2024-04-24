@@ -3,17 +3,14 @@ const morgan = require("morgan");
 const app = express();
 const port = 3000;
 const path = require("path");
-const fs = require("fs");
-const multer = require("multer");
-const upload = multer({ dest: "public" });
-const cors = require("cors");
+const { PrismaClient } = require("@prisma/client");
 
+const prisma = new PrismaClient();
+
+app.use(express.static(path.join(__dirname, 'frntEnd')));
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
 
 app.get("/customer", async (req, res) => {
   try {
@@ -29,11 +26,10 @@ app.get("/customer", async (req, res) => {
   }
 });
 
-
 app.delete("/customer/:id", async (req, res) => {
   const idCustomer = req.params.id;
   try {
-   const customerDeleted = await prisma.customer.delete({
+    const customerDeleted = await prisma.customer.delete({
       where: {
         id: parseInt(idCustomer)
       },
@@ -75,8 +71,6 @@ app.put("/customer/:id", async (req, res) => {
   }
 });
 
-
-
 app.post("/customer", async (req, res) => {
   const { nama, alamat, no_hp } = req.body;
   try {
@@ -84,7 +78,7 @@ app.post("/customer", async (req, res) => {
       data: {
         nama: nama,
         alamat: alamat,
-        no_hp: no_hp
+        no_hp: parseInt(no_hp)  // Convert no_hp to integer
       },
     });
     res.status(200).json({

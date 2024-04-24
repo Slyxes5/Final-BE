@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RentalOto Frontend</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  input[type="text"],
+  input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+  }
+  button:hover {
+    background-color: #45a049;
+  }
+</style>
+</head>
+<body>
+<script src="/index.js"></script>
+
+<div class="container">
+  <h1>RentalOto Form</h1>
+  <form id="customerForm" action="/customer" method="POST">
+    <label for="nama">Nama:</label>
+    <input type="text" id="nama" name="nama" required><br>
+    <label for="alamat">Alamat:</label>
+    <input type="text" id="alamat" name="alamat" required><br>
+    <label for="no_hp">Nomor HP:</label>
+    <input type="text" id=no_hp name=no_hp required><br>
+    <button type="submit">Submit</button>
+  </form>
+  <div id="message"></div>
+</div>
+
+
+</body>
+</html>
