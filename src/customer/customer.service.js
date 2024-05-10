@@ -11,7 +11,7 @@ const getCustomerById = async (id) => {
 
   const allCustomers = await findCustomerById(id);
 
-  if (!customer) {
+  if (!allCustomers) {
     throw new Error("Customer not found");
   }
 

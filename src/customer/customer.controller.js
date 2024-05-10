@@ -3,15 +3,7 @@ const prisma = require("../db");
 const { getAllCustomer, getCustomerById, createCustomer, deleteCustomerById, updateCustomerById } = require("./customer.service");
 const { createCipheriv } = require("crypto");
 
-const {
-  getAllCustomer,
-  getCustomerById,
-  createCustomer,
-  deleteCustomerById,
-  updateCustomerById,
-} = require("./customer.service");
-
-const router = express.Router;
+const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
@@ -28,7 +20,7 @@ router.get("/", async (req, res) => {
 });
 
 
-router.get("/customer/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   const idCustomer = parseInt(req.params.id);
   try {
     const allCustomers = await getCustomerById(parseInt(idCustomer));
