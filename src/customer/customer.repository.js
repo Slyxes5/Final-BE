@@ -8,7 +8,7 @@ const findCustomers = async () => {
     return customer;
 }
 
-const findCustomerById = async () => {
+const findCustomerById = async (id) => {
     const allCustomers = await prisma.customer.findUnique({
         where:{
             id,
@@ -17,7 +17,7 @@ const findCustomerById = async () => {
     return allCustomers;
 }
 
-const findCustomerByName = async () => {
+const findCustomerByName = async (nama) => {
     const allCustomers = await prisma.customer.findFirst({
         where:{
             nama,
