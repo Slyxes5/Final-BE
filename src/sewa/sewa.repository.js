@@ -16,6 +16,16 @@ const findSewaById = async (id) => {
   return allSewa;
 }
 
+const findSewaByPhone = async (no_hp) => {
+  const allSewa = await prisma.sewa.findFirst({
+      where:{
+          no_hp,
+      }    
+  })
+  return allSewa;
+
+}
+
 const insertSewa = async (sewaData) => {
   const sewa = await prisma.sewa.create({
       data: {
@@ -57,6 +67,7 @@ const deleteSewa = async (id) => {
 module.exports = {
   findSewa,
   findSewaById,
+  findSewaByPhone,
   insertSewa,
   deleteSewa,
   editSewa,
