@@ -13,3 +13,13 @@ model customer {
   alamat String? @db.VarChar(255)
   no_hp  Int?
 }
+
+model sewa {
+  id                  Int      @id @default(autoincrement())
+  Tanggal_Pengambilan DateTime
+  Tanggal_Pengembalian DateTime
+  no_hp               Int
+  id_customer         Int
+  id_mobil            Int
+}
+

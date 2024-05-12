@@ -12,8 +12,10 @@ app.use(express.json());
 
 
 const customerController = require("./customer/customer.controller");
+const sewaController = require("./sewa/sewa.controller")
 
 app.use("/customer", customerController);
+app.use("/sewa", sewaController)
 
 app.listen(port, () =>
   console.log(`Server running at http://localhost:${port}`)
