@@ -4,14 +4,13 @@ const {
   findSewa,
   findSewaById,
   insertSewa,
-  SewaByName,
   deleteSewa,
   updateSewa,
 } = require("./sewa.repository");
 
 const getAllSewa = async () => {
-  const sewa = await findSewa();
-  return sewa;
+  const allSewa = await findSewa();
+  return allSewa;
 };
 
 const getSewaById = async (id) => {
@@ -25,7 +24,7 @@ const getSewaById = async (id) => {
 const createSewa = async (newSewaData) => {
   const findSewa = await SewaByName(newSewaData.nama);
   if (findSewa) {
-    throw new Error("Name must be unique");
+    throw new Error("...");
   }
   const sewa = await insertSewa(newSewaData);
   return sewa;

@@ -2,54 +2,62 @@
 const prisma = require("../db");
 
 const findSewa = async () => {
-  return await prisma.sewa.findMany();
+  const allSewa = await prisma.sewa.findMany(); // Make sure 'sewa' is correctly named as per your schema
+  return allSewa;
 };
+
 
 const findSewaById = async (id) => {
-  return await prisma.sewa.findUnique({
-    where: {
-      id: parseInt(id, 10),
-    },
-  });
-};
+  const allSewa = await prisma.sewa.findUnique({
+      where:{
+          id,
+      }    
+  })
+  return allSewa;
+}
 
 const insertSewa = async (sewaData) => {
-  return await prisma.sewa.create({
-    data: {
-      Tanggal_Pengembalian: sewaData.tgl_pengembalian,
-      Tanggal_Pengambilan: sewaData.tgl_pengambilan,
-      no_hp: parseInt(sewaData.no_hp_customer, 10),
-      id_customer: parseInt(sewaData.id_customer, 10),
-      id_mobil: parseInt(sewaData.id_mobil, 10)
-    },
-  });
-};
+  const sewa = await prisma.sewa.create({
+      data: {
+        tgl_pengembalian: sewaData.tgl_pengembalian,
+        tgl_pengambilan: sewaData.tgl_pengambilan, // Corrected to match database column
+        no_hp_customer: parseInt(sewaData.no_hp_customer),
+        id_customer: parseInt(sewaData.id_customer),
+        id_mobil: parseInt(sewaData.id_mobil)
+      },
+    });
+  
+  return sewa;
+}
+
+const editSewa = async (id, sewaData) => {
+  const updatedSewa = await prisma.sewa.update({
+      where: {
+        id: parseInt(id),
+      },
+      data: {
+        tgl_pengembalian: sewaData.tgl_pengembalian,
+        tgl_pengambilan: sewaData.tgl_pengambilan, // Corrected to match database column
+        no_hp_customer: parseInt(sewaData.no_hp_customer, 10),
+        id_customer: parseInt(sewaData.id_customer, 10),
+        id_mobil: parseInt(sewaData.id_mobil, 10)
+      },
+    });
+}
+
 
 const deleteSewa = async (id) => {
-  return await prisma.sewa.delete({
+  await prisma.sewa.delete({
     where: {
-      id: parseInt(id, 10),
+      id,
     },
   });
-};
-
-const updateSewa = async (id, sewaData) => {
-  return await prisma.sewa.update({
-    where: {
-      id: parseInt(id, 10),
-    },
-    data: {
-      nama: sewaData.nama,
-      alamat: sewaData.alamat,
-      no_hp: parseInt(sewaData.no_hp, 10),
-    },
-  });
-};
+}
 
 module.exports = {
   findSewa,
   findSewaById,
   insertSewa,
   deleteSewa,
-  updateSewa,
+  editSewa,
 };

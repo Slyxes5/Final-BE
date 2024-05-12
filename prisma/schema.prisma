@@ -15,11 +15,10 @@ model customer {
 }
 
 model sewa {
-  id                  Int      @id @default(autoincrement())
-  Tanggal_Pengambilan DateTime
-  Tanggal_Pengembalian DateTime
-  no_hp               Int
-  id_customer         Int
-  id_mobil            Int
+  id              Int      @id @default(autoincrement())
+  tgl_pengambilan String? @db.VarChar(64)
+  tgl_pengembalian String? @db.VarChar(64)
+  no_hp_customer  Int
+  id_customer     Int
+  id_mobil        Int
 }
-
