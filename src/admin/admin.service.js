@@ -1,50 +1,52 @@
-// admin.service.js
+const { error } = require("console");
 const prisma = require("../db");
 const {
   findAdmin,
   findAdminById,
   insertAdmin,
-  adminByName,
+  findAdminByName,
   deleteAdmin,
-  updateAdmin,
+  editAdmin,
 } = require("./admin.repository");
 
 const getAllAdmin = async () => {
   const Admin = await findAdmin();
+
   return Admin;
 };
 
 const getAdminById = async (id) => {
-  const admin = await findAdminById(id);
+  const allAdmin = await findAdminById(id);
 
-  if (!admin) {
+  if (!allAdmin) {
     throw new Error("Admin not found");
   }
+
+  return allAdmin;
+};
+
+const createAdmin = async (newAdminData) => {
+  const findAdmin = await findAdminByName(newAdminData.nama);
+
+  if (findAdmin) {
+    throw new error("Name has to be unique");
+  }
+
+  const admin = await insertAdmin(newAdminData);
 
   return admin;
 };
 
-const createAdmin = async (newAdminData) => {
-  const findAdmin = await adminByName(newAdminData.nama);
-
-  if (findAdmin) {
-    throw new Error("Name has to be unique");
-  }
-
-  const Admin = await insertAdmin(newAdminData);
-  return Admin;
-};
-
 const deleteAdminById = async (id) => {
   await getAdminById(id);
+
   await deleteAdmin(id);
 };
 
 const updateAdminById = async (id, AdminData) => {
   await getAdminById(id);
-  const updatedAdmin = await updateAdmin(id, AdminData);
 
-  return updatedAdmin;
+  const updatedAdmin = await editAdmin(id, AdminData);
 };
 
 module.exports = {

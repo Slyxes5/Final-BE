@@ -1,55 +1,87 @@
 const express = require("express");
-const router = express.Router();
+const prisma = require("../db");
 const {
   getAllAdmin,
   getAdminById,
   createAdmin,
   deleteAdminById,
   updateAdminById,
-} = require("./admin.service.js");
+} = require("./admin.service");
+const { createCipheriv } = require("crypto");
+
+const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const admins = await getAllAdmin();
-    res.json(admins);
+    const allAdmins = await getAllAdmin();
+    console.log(allAdmins);
+    res.status(200).json({
+      status: "Data semua admin berhasil ditemukan",
+      data: allAdmins,
+    });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error(err);
+    res.status(500).send("Internal Server Error");
   }
 });
 
 router.get("/:id", async (req, res) => {
+  const idAdmin = req.params.id;
   try {
-    const admin = await getAdminById(req.params.id);
-    res.json(admin);
+    const allAdmin = await getAdminById(idAdmin); // make sure getAdminById is imported correctly
+    res.status(200).json({
+      status: "success",
+      data: allAdmin,
+    });
   } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
-router.post("/", async (req, res) => {
-  try {
-    const newAdmin = await createAdmin(req.body);
-    res.status(201).json(newAdmin);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
+    console.error(err);
+    res.status(500).send("Internal Server Error");
   }
 });
 
 router.delete("/:id", async (req, res) => {
+  const idAdmin = req.params.id;
   try {
-    await deleteAdminById(req.params.id);
-    res.json({ message: "Admin deleted" });
+    await deleteAdminById(parseInt(idAdmin));
+    res.status(200).json({
+      status: "success",
+      message: "data has successfully deleted",
+    });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error(err);
+    res.status(500).send("Internal Server Error");
   }
 });
 
 router.put("/:id", async (req, res) => {
+  const idAdmin = req.params.id;
+  const adminData = req.body;
+
   try {
-    const updatedAdmin = await updateAdminById(req.params.id, req.body);
-    res.json(updatedAdmin);
+    const updatedAdmin = await updateAdminById(parseInt(adminId), adminData);
+    res.status(200).json({
+      status: "success",
+      message: "Data Customer berhasil diperbarui",
+      data: updatedAdmin,
+    });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.post("/", async (req, res) => {
+  const newAdminData = req.body;
+  try {
+    const admin = await createAdmin(newAdminData);
+    res.status(200).json({
+      status: "success",
+      message: "data berhasil dimasukan",
+      data: admin,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
   }
 });
 

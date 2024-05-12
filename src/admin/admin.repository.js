@@ -1,35 +1,34 @@
-// admin.repository.js
 const prisma = require("../db");
 
-const findAdmin = async () => {
-  const allAdmins = await prisma.admin.findMany();
-  return allAdmins;
-};
+const findAdmins = async () => {
+  const admin = await prisma.admin.findMany();
 
-const findAdminById = async (id) => {
-  const admin = await prisma.admin.findUnique({
-    where: {
-      id: parseInt(id),
-    },
-  });
   return admin;
 };
 
-const adminByName = async (nama) => {
-  const admin = await prisma.admin.findFirst({
+const findAdminById = async (id) => {
+  const allAdmin = await prisma.admin.findUnique({
+    where: {
+      id,
+    },
+  });
+  return allAdmin;
+};
+
+const findAdminByName = async (nama) => {
+  const allAdmin = await prisma.admin.findFirst({
     where: {
       nama,
     },
   });
-  return admin;
+  return allAdmin;
 };
 
 const insertAdmin = async (adminData) => {
   const admin = await prisma.admin.create({
     data: {
       nama: adminData.nama,
-      alamat: adminData.alamat,
-      no_hp: parseInt(adminData.no_hp),
+      no_hp: adminData.parseInt(adminData.no_hp),
     },
   });
 
@@ -39,30 +38,28 @@ const insertAdmin = async (adminData) => {
 const deleteAdmin = async (id) => {
   await prisma.admin.delete({
     where: {
-      id: parseInt(id),
+      id,
     },
   });
 };
 
-const updateAdmin = async (id, adminData) => {
-  const admin = await prisma.admin.update({
+const editAdmin = async (id, adminData) => {
+  const updatedAdmin = await prisma.admin.update({
     where: {
       id: parseInt(id),
     },
     data: {
       nama: adminData.nama,
-      alamat: adminData.alamat,
       no_hp: adminData.no_hp,
     },
   });
-  return admin;
 };
 
 module.exports = {
-  findAdmin,
+  findAdmins,
   findAdminById,
-  adminByName,
+  findAdminByName,
   insertAdmin,
   deleteAdmin,
-  updateAdmin,
+  editAdmin,
 };
