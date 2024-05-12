@@ -13,3 +13,9 @@ model customer {
   alamat String? @db.VarChar(255)
   no_hp  Int?
 }
+
+model admin {
+  id    Int     @id @default(autoincrement())
+  nama  String? @db.VarChar(255)
+  no_hp Int?
+}

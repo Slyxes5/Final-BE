@@ -2,7 +2,7 @@ const express = require("express");
 const prisma = require("../db");
 const { getAllCustomer, getCustomerById } = require("./customer.service");
 
-const router = express.Router;
+const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
