@@ -1,6 +1,7 @@
 const express = require("express");
 const prisma = require("../db");
-const { getAllCustomer, getCustomerById } = require("./customer.service");
+const { getAllCustomer, getCustomerById, createCustomer, deleteCustomerById, updateCustomerById } = require("./customer.service");
+const { createCipheriv } = require("crypto");
 
 const router = express.Router();
 
@@ -18,10 +19,11 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/customer/:id", async (req, res) => {
-  const idCustomer = req.params.id;
+
+router.get("/:id", async (req, res) => {
+  const idCustomer = parseInt(req.params.id);
   try {
-    const allCustomers = await getCustomerById(idCustomer);
+    const allCustomers = await getCustomerById(parseInt(idCustomer));
     res.status(200).json({
       status: "success",
       data: allCustomers,
@@ -35,11 +37,7 @@ router.get("/customer/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   const idCustomer = req.params.id;
   try {
-    const customerDeleted = await prisma.customer.delete({
-      where: {
-        id: parseInt(idCustomer),
-      },
-    });
+   await deleteCustomerById(parseInt(idCustomer))
     res.status(200).json({
       status: "success",
       message: "data has successfully deleted",
@@ -52,20 +50,10 @@ router.delete("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   const customerId = req.params.id;
-  const { nama, alamat, no_hp } = req.body;
+  const customerData = req.body;
 
   try {
-    const updatedCustomer = await prisma.customer.update({
-      where: {
-        id: parseInt(customerId),
-      },
-      data: {
-        nama: nama,
-        alamat: alamat,
-        no_hp: no_hp,
-      },
-    });
-
+    const updatedCustomer = await updateCustomerById(parseInt(customerId), customerData);
     res.status(200).json({
       status: "success",
       message: "Data Customer berhasil diperbarui",
@@ -77,24 +65,39 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+// router.post("/", async (req, res) => {
+//   const { nama, alamat, no_hp } = req.body;
+//   try {
+//     await prisma.customer.create({
+//       data: {
+//         nama: nama,
+//         alamat: alamat,
+//         no_hp: parseInt(no_hp), // Convert no_hp to integer
+//       },
+//     });
+//     res.status(200).json({
+//       status: "success",
+//       message: "data berhasil dimasukan",
+//     });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
+
 router.post("/", async (req, res) => {
-  const { nama, alamat, no_hp } = req.body;
+  const newCustomerData = req.body;
   try {
-    await prisma.customer.create({
-      data: {
-        nama: nama,
-        alamat: alamat,
-        no_hp: parseInt(no_hp), // Convert no_hp to integer
-      },
-    });
+    const customer = await createCustomer(newCustomerData);
     res.status(200).json({
       status: "success",
-      message: "data berhasil dimasukan",
-    });
+      message: "data berhasil dimasukkan",
+      data: customer,
+    })
   } catch (err) {
-    console.error(err);
-    res.status(500).send("Internal Server Error");
+    console.log(err);
+    res.status(500).send("Internal Server Error");    
   }
-});
+})
 
 module.exports = router;
