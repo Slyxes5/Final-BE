@@ -19,3 +19,9 @@ model Mobil {
   Merk  String? @db.VarChar
   Warna String? @db.Char
 }
+
+model admin {
+  id    Int     @id @default(autoincrement())
+  nama  String? @db.VarChar(255)
+  no_hp Int?
+}
