@@ -25,3 +25,12 @@ model admin {
   nama  String? @db.VarChar(255)
   no_hp Int?
 }
+
+model sewa {
+  id              Int      @id @default(autoincrement())
+  tgl_pengambilan String? @db.VarChar(64)
+  tgl_pengembalian String? @db.VarChar(64)
+  no_hp_customer  Int
+  id_customer     Int
+  id_mobil        Int
+}
