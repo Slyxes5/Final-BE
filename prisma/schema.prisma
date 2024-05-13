@@ -12,4 +12,28 @@ model customer {
   nama   String? @db.VarChar(255)
   alamat String? @db.VarChar(255)
   no_hp  Int?
+  sewa   sewa[]
+}
+
+model admin {
+  id    Int     @id @default(autoincrement())
+  nama  String? @db.VarChar(255)
+  no_hp Int?
+}
+
+model sewa {
+  id              Int      @id @default(autoincrement())
+  tgl_pengambilan String? @db.VarChar(64)
+  tgl_pengembalian String? @db.VarChar(64)
+  id_customer     Int
+  customer        customer @relation(fields: [id_customer], references: [id])
+  id_mobil        Int
+  mobil           Mobil    @relation(fields: [id_mobil], references: [ID])
+}
+
+model Mobil {
+  ID    Int     @id @default(autoincrement())
+  Merk  String? @db.VarChar(64)
+  Warna String? @db.VarChar(64)
+  sewa  sewa[]
 }
