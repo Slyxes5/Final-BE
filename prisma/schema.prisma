@@ -7,19 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Customer {
-  ID     Int     @id
-  Nama   String? @db.VarChar
-  Alamat String? @db.VarChar
-  No_Hp  Int?
-}
-
-model Mobil {
-  ID    Int     @id
-  Merk  String? @db.VarChar
-  Warna String? @db.Char
-}
-
 model admin {
   id    Int     @id @default(autoincrement())
   nama  String? @db.VarChar(255)
