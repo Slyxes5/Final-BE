@@ -48,9 +48,9 @@ const editSewa = async (id, sewaData) => {
       data: {
         tgl_pengembalian: sewaData.tgl_pengembalian,
         tgl_pengambilan: sewaData.tgl_pengambilan, // Corrected to match database column
-        no_hp_customer: parseInt(sewaData.no_hp_customer, 10),
-        id_customer: parseInt(sewaData.id_customer, 10),
-        id_mobil: parseInt(sewaData.id_mobil, 10)
+        no_hp_customer: parseInt(sewaData.no_hp_customer),
+        id_customer: parseInt(sewaData.id_customer),
+        id_mobil: parseInt(sewaData.id_mobil)
       },
     });
 }
