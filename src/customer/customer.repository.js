@@ -57,6 +57,7 @@ const editCustomer = async (id, customerData) => {
       no_hp: customerData.no_hp,
     },
   });
+  return updatedCustomer;
 };
 
 module.exports = {
