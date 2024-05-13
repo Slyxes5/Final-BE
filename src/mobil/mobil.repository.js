@@ -6,19 +6,19 @@ const findMobil = async () => {
   return allMobils;
 };
 
-const findMobilById = async (id) => {
+const findMobilById = async (ID) => {
   const mobil = await prisma.mobil.findUnique({
     where: {
-      id: parseInt(id),
+      ID,
     },
   });
   return mobil;
 };
 
-const mobilByName = async (nama) => {
+const mobilByName = async (Merk) => {
   const mobil = await prisma.mobil.findFirst({
     where: {
-      nama,
+      Merk,
     },
   });
   return mobil;
@@ -27,32 +27,30 @@ const mobilByName = async (nama) => {
 const insertMobil = async (mobilData) => {
   const mobil = await prisma.mobil.create({
     data: {
-      nama: mobilData.nama,
-      alamat: mobilData.alamat,
-      no_hp: parseInt(mobilData.no_hp),
+      Merk: mobilData.Merk,
+      Warna: mobilData.Warna,
     },
   });
 
   return mobil;
 };
 
-const deleteMobil = async (id) => {
+const deleteMobil = async (ID) => {
   await prisma.mobil.delete({
     where: {
-      id: parseInt(id),
+      ID,
     },
   });
 };
 
-const updateMobil = async (id, mobilData) => {
+const updateMobil = async (ID, MobilData) => {
   const mobil = await prisma.mobil.update({
     where: {
-      id: parseInt(id),
+      ID,
     },
     data: {
-      nama: mobilData.nama,
-      alamat: mobilData.alamat,
-      no_hp: mobilData.no_hp,
+      Merk: MobilData.Merk,
+      Warna: MobilData.Warna,
     },
   });
   return mobil;
@@ -65,4 +63,4 @@ module.exports = {
   insertMobil,
   deleteMobil,
   updateMobil,
-}
+};

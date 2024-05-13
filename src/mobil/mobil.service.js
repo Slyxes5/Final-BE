@@ -10,12 +10,12 @@ const {
 } = require("./mobil.repository");
 
 const getAllMobil = async () => {
-  const Mobil = await findMobil();
-  return Mobil;
+  const mobil = await findMobil();
+  return mobil;
 };
 
-const getMobilById = async (id) => {
-  const mobil = await findMobilById(id);
+const getMobilById = async (ID) => {
+  const mobil = await findMobilById(ID);
 
   if (!mobil) {
     throw new Error("Mobil not found");
@@ -25,7 +25,7 @@ const getMobilById = async (id) => {
 };
 
 const createMobil = async (newMobilData) => {
-  const findMobil = await mobilByName(newMobilData.nama);
+  const findMobil = await mobilByName(newMobilData.Merk);
 
   if (findMobil) {
     throw new Error("Name has to be unique");
@@ -35,14 +35,14 @@ const createMobil = async (newMobilData) => {
   return Mobil;
 };
 
-const deleteMobilById = async (id) => {
-  await getMobilById(id);
-  await deleteMobil(id);
+const deleteMobilById = async (ID) => {
+  await getMobilById(ID);
+  await deleteMobil(ID);
 };
 
-const updateMobilById = async (id, MobilData) => {
-  await getMobilById(id);
-  const updatedMobil = await updateMobil(id, MobilData);
+const updateMobilById = async (ID, MobilData) => {
+  await getMobilById(ID);
+  const updatedMobil = await updateMobil(ID, MobilData);
 
   return updatedMobil;
 };
