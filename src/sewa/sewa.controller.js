@@ -1,10 +1,10 @@
 const express = require("express");
 const {
-    getAllSewa,
-    getSewaById,
-    createSewa,
-    deleteSewaById,
-    updateSewaById,
+  getAllSewa,
+  getSewaById,
+  createSewa,
+  deleteSewaById,
+  updateSewaById,
 } = require("./sewa.service");
 
 const router = express.Router();
@@ -24,8 +24,9 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
+  const idSewa = parseInt(req.params.id);
   try {
-    const sewa = await getSewaById(req.params.id);
+    const sewa = await getSewaById(idSewa);
     if (!sewa) {
       return res.status(404).json({ message: "Sewa not found" });
     }
@@ -43,17 +44,17 @@ router.post("/", async (req, res) => {
       status: "success",
       message: "data berhasil dimasukkan",
       data: sewa,
-    })
+    });
   } catch (err) {
     console.log(err);
     res.status(400).json({ message: err.message });
   }
-})
+});
 
 router.delete("/:id", async (req, res) => {
   const idSewa = req.params.id;
   try {
-   await deleteSewaById(parseInt(idSewa))
+    await deleteSewaById(parseInt(idSewa));
     res.status(200).json({
       status: "success",
       message: "data has successfully deleted",

@@ -16,7 +16,6 @@ const getAllSewa = async () => {
 };
 
 const getSewaById = async (id) => {
-
   const allSewa = await findSewaById(id);
 
   if (!allSewa) {
@@ -27,9 +26,9 @@ const getSewaById = async (id) => {
 };
 
 const createSewa = async (newSewaData) => {
-  const findSewa = await findSewaByPhone(newSewaData.no_hp);
+  const findSewa = await findSewaById(newSewaData.id);
 
-  if(findSewa){
+  if (findSewa) {
     throw new Error("A record with this phone number already exists.");
   }
 
@@ -38,20 +37,17 @@ const createSewa = async (newSewaData) => {
   return sewa;
 };
 
-
 const deleteSewaById = async (id) => {
-  await getSewaById(id);  // Ensure sewa exists before attempting to delete
+  await getSewaById(id); // Ensure sewa exists before attempting to delete
   await deleteSewa(id);
 };
 
-const updateSewaById = async (id, sewaData) => {  
-
+const updateSewaById = async (id, sewaData) => {
   await getSewaById(id);
 
   const updatedSewa = await editSewa(id, sewaData);
 
   return updateSewa;
-
 };
 
 module.exports = {
