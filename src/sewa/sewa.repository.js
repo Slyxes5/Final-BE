@@ -2,7 +2,12 @@
 const prisma = require("../db");
 
 const findSewa = async () => {
-  const allSewa = await prisma.sewa.findMany(); // Make sure 'sewa' is correctly named as per your schema
+  const allSewa = await prisma.sewa.findMany({
+    include: {
+      customer: true,
+      mobil: true,
+    },
+  }); // Make sure 'sewa' is correctly named as per your schema
   return allSewa;
 };
 
@@ -13,10 +18,6 @@ const findSewaById = async (id) => {
   const allSewa = await prisma.sewa.findUnique({
     where: {
       id,
-    },
-    include: {
-      customer: true,
-      mobil: true,
     },
   });
   return allSewa;
