@@ -26,11 +26,11 @@ const getSewaById = async (id) => {
 };
 
 const createSewa = async (newSewaData) => {
-  const findSewa = await findSewaById(newSewaData.id);
+  // const findSewa = await findSewaById(newSewaData.id);
 
-  if (findSewa) {
-    throw new Error("A record with this phone number already exists.");
-  }
+  // if (findSewa) {
+  //   throw new Error("A record with this phone number already exists.");
+  // }
 
   const sewa = await insertSewa(newSewaData);
 
