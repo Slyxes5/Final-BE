@@ -1,6 +1,6 @@
 const prisma = require("../db");
 
-const findAdmins = async () => {
+const findAdmin = async () => {
   const admin = await prisma.admin.findMany();
 
   return admin;
@@ -28,7 +28,7 @@ const insertAdmin = async (adminData) => {
   const admin = await prisma.admin.create({
     data: {
       nama: adminData.nama,
-      no_hp: adminData.parseInt(adminData.no_hp),
+      no_hp: adminData.no_hp,
     },
   });
 
@@ -56,7 +56,7 @@ const editAdmin = async (id, adminData) => {
 };
 
 module.exports = {
-  findAdmins,
+  findAdmin,
   findAdminById,
   findAdminByName,
   insertAdmin,

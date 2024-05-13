@@ -28,7 +28,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   const idAdmin = req.params.id;
   try {
-    const allAdmin = await getAdminById(idAdmin); // make sure getAdminById is imported correctly
+    const allAdmin = await getAdminById(parseInt(idAdmin)); // make sure getAdminById is imported correctly
     res.status(200).json({
       status: "success",
       data: allAdmin,
@@ -54,7 +54,7 @@ router.delete("/:id", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
-  const idAdmin = req.params.id;
+  const adminId = req.params.id;
   const adminData = req.body;
 
   try {
